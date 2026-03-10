@@ -1,7 +1,4 @@
 <?php
 session_start();
-$conn = new mysqli('localhost', 'root', '', '2906898_mpcdatabase');
-if ($conn->connect_error) {
-	die("Connection failed: " . $conn->connect_error);
-}
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'conn.php';
 ?>
