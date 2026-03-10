@@ -1,0 +1,85 @@
+<?php
+	include 'includes/session.php';
+
+    if(isset($_GET['return'])){
+		$return = $_GET['return'];
+		
+	}
+	else{
+		$return = 'marriage_view.php?year='.$_GET['year'];
+	}
+
+	if(isset($_POST['submit'])){
+		$ID             		=$_POST['ID'];
+        $RECORD_NO    			=$_POST['RECORD_NO'];
+        $LICENSE_NO     		=$_POST['LICENSE_NO'];
+        $NAME_MALE  			=$_POST['NAME_MALE'];
+        $NAME_FEMALE   			=$_POST['NAME_FEMALE'];
+        $LEGAL_STATUS_MALE		=$_POST['LEGAL_STATUS_MALE'];
+        $LEGAL_STATUS_FEMALE	=$_POST['LEGAL_STATUS_FEMALE'];
+        $ACTUAL_ADDRESS_MALE	=$_POST['ACTUAL_ADDRESS_MALE'];
+        $ACTUAL_ADDRESS_FEMALE	=$_POST['ACTUAL_ADDRESS_FEMALE'];
+        $DATE_OF_BIRTH_MALE		=$_POST['DATE_OF_BIRTH_MALE'];
+        $DATE_OF_BIRTH_FEMALE	=$_POST['DATE_OF_BIRTH_FEMALE'];
+        $POB_MALE   			=$_POST['POB_MALE'];
+        $POB_FEMALE    			=$_POST['POB_FEMALE'];
+        $DATE_BAPTISM_MALE  	=$_POST['DATE_BAPTISM_MALE'];
+        $DATE_BAPTISM_FEMALE	=$_POST['DATE_BAPTISM_FEMALE'];
+        $PLACE_BAPTISM_MALE 	=$_POST['PLACE_BAPTISM_MALE'];
+        $PLACE_BAPTISM_FEMALE	=$_POST['PLACE_BAPTISM_FEMALE'];
+        $PARENTS_MALE   		=$_POST['PARENTS_MALE'];
+        $PARENTS_FEMALE    		=$_POST['PARENTS_FEMALE'];
+        $SPONSORS_MALE   		=$_POST['SPONSORS_MALE'];
+        $SPONSORS_FEMALE    	=$_POST['SPONSORS_FEMALE'];
+        $MARRIAGE_MINISTER  	=$_POST['MARRIAGE_MINISTER'];
+        $DATE_OF_MARRIAGE   	=$_POST['DATE_OF_MARRIAGE'];
+		$BOOK_NO    		    =$_POST['BOOK_NO'];
+		$PAGE_NO    		    =$_POST['PAGE_NO'];
+		$REG_NO    			    =$_POST['REG_NO'];
+		$SERIES_NO    		    =$_POST['SERIES_NO'];
+		$NOTATIONS    		    =$_POST['NOTATIONS'];
+
+		$sql="UPDATE tbl_marriage
+		SET RECORD_NO='$RECORD_NO',
+		LICENSE_NO='$LICENSE_NO',
+		NAME_MALE='$NAME_MALE',
+		NAME_FEMALE='$NAME_FEMALE',
+		LEGAL_STATUS_MALE='$LEGAL_STATUS_MALE',
+		LEGAL_STATUS_FEMALE='$LEGAL_STATUS_FEMALE',
+		ACTUAL_ADDRESS_MALE='$ACTUAL_ADDRESS_MALE',
+		ACTUAL_ADDRESS_FEMALE='$ACTUAL_ADDRESS_FEMALE',
+		DATE_OF_BIRTH_MALE='$DATE_OF_BIRTH_MALE',
+		DATE_OF_BIRTH_FEMALE='$DATE_OF_BIRTH_FEMALE', 
+		POB_MALE='$POB_MALE',
+		POB_FEMALE='$POB_FEMALE',
+		DATE_BAPTISM_MALE='$DATE_BAPTISM_MALE',
+		DATE_BAPTISM_FEMALE='$DATE_BAPTISM_FEMALE',
+		PLACE_BAPTISM_MALE='$PLACE_BAPTISM_MALE',
+		PLACE_BAPTISM_FEMALE='$PLACE_BAPTISM_FEMALE',
+		PARENTS_MALE='$PARENTS_MALE', 
+		PARENTS_FEMALE='$PARENTS_FEMALE',
+		SPONSORS_MALE='$SPONSORS_MALE',
+		SPONSORS_FEMALE='$SPONSORS_FEMALE',
+		MARRIAGE_MINISTER='$MARRIAGE_MINISTER', 
+		DATE_OF_MARRIAGE='$DATE_OF_MARRIAGE',
+		BOOK_NO='$BOOK_NO',
+		PAGE_NO='$PAGE_NO',
+		REG_NO='$REG_NO',
+		SERIES_NO='$SERIES_NO',
+		NOTATIONS='$NOTATIONS'
+		WHERE ID = '$ID'";
+		if($conn->query($sql)){
+			$_SESSION['success'] = 'Record  updated successfully';
+			audit_log($conn,$user,'Marriage Updated',"ID: $ID - $NAME_MALE & $NAME_FEMALE");
+		}
+		else{
+			$_SESSION['error'] = $conn->error;
+		}
+
+	}
+	else{
+		$_SESSION['error'] = 'Select recird to edit first';
+	}
+
+	header('location:'.$return);
+?>
